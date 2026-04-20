@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import PageHeader from "../../components/PageHeader";
 
 function InvigilatorAssignment() {
 
@@ -27,7 +28,7 @@ function InvigilatorAssignment() {
   };
 
   const fetchFaculties = () => {
-    axios.get("http://localhost:8080/api/users?role=FACULTY")
+    axios.get("http://localhost:8080/api/users/role/FACULTY")
       .then(res => setFaculties(res.data))
       .catch(err => console.error(err));
   };
@@ -50,8 +51,14 @@ function InvigilatorAssignment() {
       return;
     }
 
+    const assignmentData = {
+      exam: { id: parseInt(form.examId) },
+      faculty: { id: parseInt(form.facultyId) },
+      examHall: { id: parseInt(form.hallId) }
+    };
+
     try {
-      await axios.post("http://localhost:8080/api/invigilators", form);
+      await axios.post("http://localhost:8080/api/invigilators", assignmentData);
       alert("Assigned successfully");
 
       fetchAssignments();
@@ -70,7 +77,7 @@ function InvigilatorAssignment() {
 
   return (
     <div style={styles.container}>
-      <h2>Invigilator Assignment</h2>
+      <PageHeader title="Invigilator Assignment" />
 
       {/* ➕ Assign */}
       <div style={styles.form}>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import PageHeader from "../../components/PageHeader";
 
 function CourseManagement() {
 
@@ -54,7 +55,7 @@ function CourseManagement() {
 
   return (
     <div style={styles.container}>
-      <h2>Course Management</h2>
+      <PageHeader title="Course Management" />
 
       {/* ➕ Add Course */}
       <div style={styles.form}>

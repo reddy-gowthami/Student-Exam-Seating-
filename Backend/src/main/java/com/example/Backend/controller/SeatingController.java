@@ -1,10 +1,14 @@
 package com.example.Backend.controller;
 
 import com.example.Backend.entity.Exam;
+import com.example.Backend.entity.SeatingAllocation;
 import com.example.Backend.repository.ExamRepository;
 import com.example.Backend.repository.SeatingAllocationRepository;
 import com.example.Backend.service.SeatingService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/seating")
@@ -24,13 +28,22 @@ public class SeatingController {
     }
 
     @PostMapping("/allocate/{examId}")
-    public String allocate(@PathVariable Long examId) {
+    public List<SeatingAllocationDTO> allocate(@PathVariable Long examId) {
 
         Exam exam = examRepo.findById(examId)
                 .orElseThrow(() -> new RuntimeException("Exam not found"));
 
         service.allocateSeats(exam);
-        return "Seats allocated successfully!";
+
+        List<SeatingAllocation> allocations = seatingRepo.findByExam(exam);
+
+        return allocations.stream()
+                .map(a -> new SeatingAllocationDTO(
+                        a.getStudent().getName(),
+                        a.getExamHall().getHallName(),
+                        a.getSeatNumber()
+                ))
+                .collect(Collectors.toList());
     }
 
     @GetMapping

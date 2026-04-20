@@ -2,6 +2,7 @@ package com.example.Backend.controller;
 
 import com.example.Backend.entity.InvigilatorAssignment;
 import com.example.Backend.service.InvigilatorService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class InvigilatorController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public InvigilatorAssignment assign(@RequestBody InvigilatorAssignment assignment) {
         return service.assign(assignment);
     }

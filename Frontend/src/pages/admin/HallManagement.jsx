@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import PageHeader from "../../components/PageHeader";
 
 function HallManagement() {
 
@@ -54,7 +55,7 @@ function HallManagement() {
 
   return (
     <div style={styles.container}>
-      <h2>Hall Management</h2>
+      <PageHeader title="Hall Management" />
 
       {/* ➕ Add Hall */}
       <div style={styles.form}>

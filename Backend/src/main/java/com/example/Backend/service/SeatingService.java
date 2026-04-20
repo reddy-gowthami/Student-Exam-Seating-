@@ -4,6 +4,7 @@ import com.example.Backend.entity.*;
 import com.example.Backend.enums.AllocationStatus;
 import com.example.Backend.repository.*;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service
@@ -35,11 +36,19 @@ public class SeatingService {
             int capacity = hall.getSeatingCapacity();
             int count = 0;
 
+            // Generate unique random seat numbers for this hall
+            Set<Integer> seatNumbers = new HashSet<>();
+            Random random = new Random();
+            int numStudentsInHall = Math.min(capacity, students.size() - studentIndex);
+            while (seatNumbers.size() < numStudentsInHall) {
+                seatNumbers.add(random.nextInt(9999) + 1); // Random number from 1 to 9999
+            }
+            List<Integer> seatList = new ArrayList<>(seatNumbers);
+
             while (count < capacity && studentIndex < students.size()) {
 
                 User student = students.get(studentIndex).getStudent();
 
-                // Check already allocated
                 if (seatingRepo.findByExamAndStudent(exam, student) != null) {
                     studentIndex++;
                     continue;
@@ -50,8 +59,7 @@ public class SeatingService {
                 allocation.setStudent(student);
                 allocation.setExamHall(hall);
 
-                String seatNumber = hall.getHallName() + "-" +
-                        String.format("%03d", count + 1);
+                String seatNumber = seatList.get(count).toString();
 
                 allocation.setSeatNumber(seatNumber);
                 allocation.setAllocationStatus(AllocationStatus.ALLOCATED);

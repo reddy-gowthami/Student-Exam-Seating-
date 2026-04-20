@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import PageHeader from "../../components/PageHeader";
 
 function ExamManagement() {
 
@@ -44,7 +45,14 @@ function ExamManagement() {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/exams", form);
+      const examData = {
+        course: { id: parseInt(form.courseId) },
+        examType: "MIDTERM", // or make it selectable
+        examDate: form.examDate,
+        startTime: form.startTime,
+        endTime: form.endTime
+      };
+      await axios.post("http://localhost:8080/api/exams", examData);
       alert("Exam created successfully");
 
       fetchExams(); // refresh
@@ -64,7 +72,7 @@ function ExamManagement() {
 
   return (
     <div style={styles.container}>
-      <h2>Exam Management</h2>
+      <PageHeader title="Exam Management" />
 
       {/* ➕ Create Exam */}
       <div style={styles.form}>

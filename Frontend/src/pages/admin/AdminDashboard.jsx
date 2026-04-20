@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function AdminDashboard() {
-  const userName = "Admin"; 
+  const userName = "Admin";
+  const navigate = useNavigate();
 
   return (
     <div style={styles.container}>
@@ -10,27 +12,27 @@ function AdminDashboard() {
       <div style={styles.sidebar}>
         <h3>👤 {userName}</h3>
 
-        <div style={styles.menu} onClick={() => window.location.href="/admin/users"}>
+        <div style={styles.menu} onClick={() => navigate("/admin/users")}>
           Users
         </div>
 
-        <div style={styles.menu} onClick={() => window.location.href="/admin/courses"}>
+        <div style={styles.menu} onClick={() => navigate("/admin/courses")}>
           Courses
         </div>
 
-        <div style={styles.menu} onClick={() => window.location.href="/admin/exams"}>
+        <div style={styles.menu} onClick={() => navigate("/admin/exams")}>
           Exams
         </div>
 
-        <div style={styles.menu} onClick={() => window.location.href="/admin/halls"}>
+        <div style={styles.menu} onClick={() => navigate("/admin/halls")}>
           Halls
         </div>
 
-        <div style={styles.menu} onClick={() => window.location.href="/admin/seating"}>
+        <div style={styles.menu} onClick={() => navigate("/admin/seating")}>
           Seating
         </div>
 
-        <div style={styles.menu} onClick={() => window.location.href="/admin/invigilators"}>
+        <div style={styles.menu} onClick={() => navigate("/admin/invigilators")}>
           Invigilators
         </div>
       </div>
@@ -46,7 +48,7 @@ function AdminDashboard() {
             <span style={{ cursor: "pointer" }}>👤 {userName}</span>
 
             <button
-              onClick={() => window.location.href="/"}
+              onClick={() => navigate("/")}
               style={styles.logout}
             >
               Logout

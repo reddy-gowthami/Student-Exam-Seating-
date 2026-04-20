@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import PageHeader from "../../components/PageHeader";
 
 function UserManagement() {
 
@@ -65,8 +66,7 @@ function UserManagement() {
 
   return (
     <div style={styles.container}>
-
-      <h2>User Management</h2>
+      <PageHeader title="User Management" />
 
       {/* ➕ Create User */}
       <div style={styles.form}>

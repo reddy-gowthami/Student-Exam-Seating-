@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import PageHeader from "../../components/PageHeader";
 
 function SeatingAllocation() {
 
@@ -36,7 +37,7 @@ function SeatingAllocation() {
 
   return (
     <div style={styles.container}>
-      <h2>Seating Allocation</h2>
+      <PageHeader title="Seating Allocation" />
 
       {/* Select Exam */}
       <select
