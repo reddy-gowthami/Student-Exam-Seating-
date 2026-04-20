@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-function AdminDashboard() {
-  const userName = "Admin"; 
+function FacultyDashboard() {
+
+  const userName = "Faculty"; // later from backend
+
+  const [duties, setDuties] = useState([]);
+
+  useEffect(() => {
+    fetchDuties();
+  }, []);
+
+  const fetchDuties = () => {
+    axios.get("http://localhost:8080/api/invigilators/my")
+      .then(res => setDuties(res.data))
+      .catch(err => console.error(err));
+  };
 
   return (
     <div style={styles.container}>
@@ -10,29 +24,7 @@ function AdminDashboard() {
       <div style={styles.sidebar}>
         <h3>👤 {userName}</h3>
 
-        <div style={styles.menu} onClick={() => window.location.href="/admin/users"}>
-          Users
-        </div>
-
-        <div style={styles.menu} onClick={() => window.location.href="/admin/courses"}>
-          Courses
-        </div>
-
-        <div style={styles.menu} onClick={() => window.location.href="/admin/exams"}>
-          Exams
-        </div>
-
-        <div style={styles.menu} onClick={() => window.location.href="/admin/halls"}>
-          Halls
-        </div>
-
-        <div style={styles.menu} onClick={() => window.location.href="/admin/seating"}>
-          Seating
-        </div>
-
-        <div style={styles.menu} onClick={() => window.location.href="/admin/invigilators"}>
-          Invigilators
-        </div>
+        <div style={styles.menu}>My Duties</div>
       </div>
 
       {/* Right Side */}
@@ -56,14 +48,27 @@ function AdminDashboard() {
 
         {/* Main Content */}
         <div style={styles.main}>
+          <h3>Invigilation Duties</h3>
 
-          {/* Cards */}
-          <div style={styles.cards}>
-            <div style={styles.card}>Students</div>
-            <div style={styles.card}>Courses</div>
-            <div style={styles.card}>Exams</div>
-            <div style={styles.card}>Halls</div>
-          </div>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th>Exam</th>
+                <th>Hall</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {duties.map((d) => (
+                <tr key={d.id}>
+                  <td>{d.exam?.course?.courseName}</td>
+                  <td>{d.examHall?.hallName}</td>
+                  <td>{d.assignmentStatus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
         </div>
 
@@ -129,20 +134,10 @@ const styles = {
     padding: "20px",
   },
 
-  cards: {
-    display: "flex",
-    gap: "20px",
-  },
-
-  card: {
-    flex: 1,
-    padding: "20px",
-    backgroundColor: "#3b82f6",
-    color: "white",
-    borderRadius: "8px",
-    textAlign: "center",
-    fontWeight: "bold",
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
   },
 };
 
-export default AdminDashboard;
+export default FacultyDashboard;

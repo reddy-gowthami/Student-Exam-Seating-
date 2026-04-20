@@ -1,11 +1,23 @@
 package com.example.Backend.entity;
 
-import com.example.Backend.enums.Role;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.Data;
-
 import java.time.LocalDateTime;
+
+import com.example.Backend.enums.Role;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
 @Table(name = "users")
@@ -37,4 +49,9 @@ public class User {
     private Role role;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public User orElseThrow(Object object) {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
+    }
 }
