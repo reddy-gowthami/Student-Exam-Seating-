@@ -8,12 +8,12 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -28,8 +28,12 @@ public class User {
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
     private String phoneNumber;
 
-    @NotNull
+    @NotBlank
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    private String password;
+
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Role role;
 
     private LocalDateTime createdAt = LocalDateTime.now();
