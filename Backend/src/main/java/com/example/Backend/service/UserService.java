@@ -15,8 +15,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public User createUser(User newUser) {
+
+        // 🔥 ADMIN RESTRICTION LOGIC
+        if (newUser.getRole() == Role.ADMIN) {
+            long adminCount = userRepository.countByRole(Role.ADMIN);
+
+            if (adminCount > 0) {
+                throw new RuntimeException("Admin already exists");
+            }
+        }
+
+        return userRepository.save(newUser);
     }
 
     public List<User> getAllUsers() {
