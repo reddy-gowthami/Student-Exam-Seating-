@@ -13,6 +13,9 @@ public class InvigilatorService {
     public InvigilatorService(InvigilatorAssignmentRepository repo) {
         this.repo = repo;
     }
+    public List<InvigilatorAssignment> getAll() {
+        return repo.findAll();
+    }
 
     public InvigilatorAssignment assign(InvigilatorAssignment assignment) {
 
@@ -33,6 +36,8 @@ public class InvigilatorService {
                 }
             }
         }
+
+        
 
         return repo.save(assignment);
     }
