@@ -1,7 +1,10 @@
 package com.example.Backend.controller;
 
 import com.example.Backend.entity.StudentEnrollment;
+import com.example.Backend.entity.User;
 import com.example.Backend.service.EnrollmentService;
+import com.example.Backend.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,14 +15,18 @@ import java.util.List;
 public class EnrollmentController {
 
     private final EnrollmentService service;
+    private final UserService userService;
 
-    public EnrollmentController(EnrollmentService service) {
+    public EnrollmentController(EnrollmentService service, UserService userService) {
         this.service = service;
+        this.userService = userService;
     }
 
     @PostMapping
-    public StudentEnrollment enroll(@RequestBody StudentEnrollment enrollment) {
-        return service.enroll(enrollment);
+    public StudentEnrollment enroll(@RequestParam Long courseId, Authentication authentication) {
+        String email = authentication.getName();
+        User student = userService.findByEmail(email);
+        return service.enroll(student, courseId);
     }
 
     @GetMapping

@@ -25,7 +25,7 @@ function RegisterPage() {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/users", form);
+      await axios.post("http://localhost:8080/api/auth/register", form);
       alert("User Registered Successfully");
       window.location.href = "/";
     } catch (err) {

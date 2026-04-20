@@ -13,17 +13,22 @@ function LoginPage() {
     }
 
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(`http://localhost:8080/api/auth/login?email=${email}&password=${password}`);
 
-      const user = res.data;
+      const token = res.data; // JWT token
 
-      
-      if (user.role === "ADMIN") {
+      // Store token in localStorage
+      localStorage.setItem("token", token);
+
+      // Decode token to get user info (simple decode, or make another API call)
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const role = payload.role; // Assuming role is in token
+
+      console.log("Decoded role:", role); // Debug log
+
+      if (role === "ADMIN") {
         window.location.href = "/admin";
-      } else if (user.role === "STUDENT") {
+      } else if (role === "STUDENT") {
         window.location.href = "/student";
       } else {
         window.location.href = "/faculty";

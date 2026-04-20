@@ -17,7 +17,6 @@ public class UserService {
 
     public User createUser(User newUser) {
 
-        // 🔥 ADMIN RESTRICTION LOGIC
         if (newUser.getRole() == Role.ADMIN) {
             long adminCount = userRepository.countByRole(Role.ADMIN);
 
@@ -35,5 +34,10 @@ public class UserService {
 
     public List<User> getUsersByRole(Role role) {
         return userRepository.findByRole(role);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
