@@ -1,6 +1,7 @@
 package com.example.Backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,10 +15,12 @@ public class StudentEnrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     private User student;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;

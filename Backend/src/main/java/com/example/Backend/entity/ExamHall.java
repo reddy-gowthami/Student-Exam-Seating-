@@ -1,6 +1,7 @@
 package com.example.Backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,13 @@ public class ExamHall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String hallName;
+    
+    @NotBlank
     private String building;
+    
+    @Min(1)
     private int seatingCapacity;
 
     private LocalDateTime createdAt = LocalDateTime.now();
