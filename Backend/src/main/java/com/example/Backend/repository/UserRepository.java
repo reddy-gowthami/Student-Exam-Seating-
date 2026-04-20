@@ -12,11 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRole(Role role);
 
     // Find user by email (for login)
-<<<<<<< HEAD
-    Optional <User>  findByEmail(String email);
-=======
     Optional<User> findByEmail(String email);
->>>>>>> ab4366268e314b1d84bf7cc38fa246bbeb402e31
 
     long countByRole(Role role);
 }
